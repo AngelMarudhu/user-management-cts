@@ -43,8 +43,9 @@ const Registeration = () => {
     if (formData.profilePicture) {
       formDataToSend.append("profilePicture", formData.profilePicture);
     }
-
     dispatch(registerUser(formDataToSend));
+
+    navigate("/login");
 
     setFormData({
       name: "",
