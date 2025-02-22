@@ -21,7 +21,7 @@ app.use(cors());
 // app.use("/", (req, res) => {
 //   res.send("API is running");
 // });
-
+//// this middleware is used to serve the static files to the client
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/auth", loginRouter);
