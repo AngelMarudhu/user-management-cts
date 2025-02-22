@@ -56,7 +56,7 @@ const Admin = () => {
               className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 w-full h-auto md:w-100 sm:w-100"
             >
               <img
-                src={`http://localhost:5001/${user.profilePicture}`}
+                src={`https://user-management-cts.onrender.com/${user.profilePicture}`}
                 alt="Profile"
                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
               />

@@ -61,7 +61,7 @@ const Home = () => {
             onMouseLeave={() => setHover(false)}
           >
             <img
-              src={`http://localhost:5001${user.profilePicture}`}
+              src={`https://user-management-cts.onrender.com${user.profilePicture}`}
               alt={user.name}
               className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
             />
