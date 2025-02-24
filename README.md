@@ -4,6 +4,10 @@
 
 # Hey this is user-management application built with the MERN tech stack which is frontend(React.js) and backend(Node.js) we just built this application with RBAC(Role-Based Access Control) so user can login with different roles and can perform crud operations on the user page at the same time admin can perform crud operations on the user page and admin can also perform crud operations on the role page and admin can also perform manage users by creating, updating, viewing, and deleting user information this application follows monolith and MVC pattern architecture with strong focus on modular and scalable architecture
 
+# Hosted Link
+1. Frontend: user-management-cts.netlify.app
+2. Backend: https://user-management-cts.onrender.com
+
 # Credentials for admin
 
 1. email: admin1@example.com
