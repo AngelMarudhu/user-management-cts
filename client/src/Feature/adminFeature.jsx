@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://user-management-cts.onrender.com/api/admin";
+// const API_URL = "https://user-management-cts.onrender.com/api/admin";
+const API_URL = "http://localhost:5001/api/admin";
 
 export const getAllUsers = createAsyncThunk(
   "get/all/users",

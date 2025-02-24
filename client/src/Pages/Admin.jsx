@@ -18,6 +18,8 @@ const Admin = () => {
   const { users } = useSelector((state) => state.admin);
   const [isPopup, setIsPopup] = useState(false);
 
+  // console.log(users);
+
   useEffect(() => {
     debounce();
   }, []);
@@ -37,26 +39,30 @@ const Admin = () => {
   };
 
   return (
-    <div className="relative w-full h-screen flex flex-col items-center p-4 bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Admin Page - User List</h1>
-      <button
-        onClick={handleLogout}
-        className=" p-2 border-2 rounded-lg mb-3 bg-black text-white cursor-pointer hover:bg-gray-700"
-      >
-        Logout
-      </button>
+    <div className="relative w-full h-screen flex flex-col items-center p-4">
+      <div className="flex justify-between items-center w-full mb-4">
+        <h1 className="text-2xl font-bold mb-4">Admin Page - User List</h1>
+        <button
+          onClick={handleLogout}
+          className=" p-2 border-2 rounded-lg mb-3 bg-black text-white cursor-pointer hover:bg-gray-700"
+        >
+          Logout
+        </button>
+      </div>
 
       {users.length === 0 ? (
         <p>No users found.</p>
       ) : (
-        <div className="flex flex-col flex-wrap md:flex-row justify-between items-center gap-6 w-full">
+        <div className="flex flex-col flex-wrap justify-between items-center gap-6 w-full">
           {users.map((user) => (
             <div
               key={user._id}
               className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 w-full h-auto md:w-100 sm:w-100"
             >
+              {/*http://localhost:5001/*/}
+              {/* https://user-management-cts.onrender.com/ */}
               <img
-                src={`https://user-management-cts.onrender.com/${user.profilePicture}`}
+                src={`http://localhost:5001/${user.profilePicture}`}
                 alt="Profile"
                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
               />

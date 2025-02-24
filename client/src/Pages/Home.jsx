@@ -60,8 +60,10 @@ const Home = () => {
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
           >
+            {/* http://localhost:5001 */}
+            {/* https://user-management-cts.onrender.com */}
             <img
-              src={`https://user-management-cts.onrender.com${user.profilePicture}`}
+              src={`http://localhost:5001${user.profilePicture}`}
               alt={user.name}
               className="w-24 h-24 rounded-full border-2 border-gray-300 object-cover"
             />
