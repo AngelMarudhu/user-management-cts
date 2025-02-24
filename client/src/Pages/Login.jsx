@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { loginUser } from "../Feature/userFeature";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, error, token } = useSelector((state) => state.user);
+  const { isLoading, error, isLoggedin } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +25,27 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    try {
+      toast.success("Login Successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+      });
+
+      setTimeout(() => {
+        dispatch(loginUser(formData));
+        navigate("/home");
+      }, 2000);
+    } catch (error) {
+      toast.error("login failed");
+    }
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-cyan-100">
+    <div className="w-full p-3 sm:w-full md:w-full lg:w-full min-h-screen flex flex-col justify-center items-center bg-cyan-100">
+      <ToastContainer />
       {isLoading ? (
         <h1 className="text-2xl mb-3">Loading...</h1>
       ) : (
@@ -39,7 +54,7 @@ const Login = () => {
       <form
         action=""
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 p-6 border-2 bg-white shadow-lg rounded-lg"
+        className="flex flex-col w-full md:w-auto gap-4 p-6 border-2 bg-white shadow-lg rounded-lg"
       >
         <input
           className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -65,12 +80,9 @@ const Login = () => {
         >
           Login
         </button>
-        <span
-          className="cursor-pointer p-1 text-cyan-400"
-          onClick={() => navigate("/")}
-        >
-          New Register
-        </span>
+        <a href="/">
+          <span className="cursor-pointer p-1 text-cyan-400">New Register</span>
+        </a>
       </form>
       {error && <p className="text-red-500">{error.message}</p>}
     </div>

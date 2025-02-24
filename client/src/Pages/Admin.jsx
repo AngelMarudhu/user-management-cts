@@ -25,7 +25,9 @@ const Admin = () => {
   }, []);
 
   const handleDelete = (deleteId) => {
-    dispatch(deleteUser(deleteId));
+    if (window.confirm("Are you sure to delete this user?")) {
+      dispatch(deleteUser(deleteId));
+    }
   };
 
   const handleLogout = () => {

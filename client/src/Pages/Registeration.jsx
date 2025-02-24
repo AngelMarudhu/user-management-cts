@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { registerUser } from "../Feature/userFeature";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Registeration = () => {
   const [formData, setFormData] = useState({
@@ -11,10 +13,23 @@ const Registeration = () => {
     profilePicture: null,
   });
 
-  const { error } = useSelector((state) => state.user);
+  const { error, isRegistered } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isRegistered) {
+      toast.success("Registration Successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    }
+  }, [isRegistered]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +47,7 @@ const Registeration = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
 
@@ -45,8 +60,6 @@ const Registeration = () => {
     }
     dispatch(registerUser(formDataToSend));
 
-    navigate("/login");
-
     setFormData({
       name: "",
       email: "",
@@ -56,10 +69,11 @@ const Registeration = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-cyan-100">
+    <div className="w-full p-3 sm:w-full md:w-full lg:w-full h-screen flex flex-col justify-center items-center bg-cyan-100">
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-6">Registration</h1>
       <form
-        className="bg-white p-6 rounded-lg shadow-lg flex flex-col gap-4 border border-gray-200"
+        className="bg-white w-full md:w-auto p-6 rounded-lg shadow-lg flex flex-col gap-4 border border-gray-200"
         onSubmit={handleSubmit}
       >
         <input

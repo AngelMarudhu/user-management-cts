@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -7,6 +7,8 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import { ToastContainer, toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 const Login = lazy(() => import("./Pages/Login"));
 const Registeration = lazy(() => import("./Pages/Registeration"));

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const ProtectedRoute = ({ children, authRequired, role }) => {
   const { token, user } = useSelector((state) => state.user);
@@ -20,7 +21,12 @@ const ProtectedRoute = ({ children, authRequired, role }) => {
   }
 
   //// If none of the conditions are met, render the children (the protected component)
-  return children;
+  return (
+    <>
+      {children}
+      <ToastContainer />
+    </>
+  );
 };
 
 export default ProtectedRoute;

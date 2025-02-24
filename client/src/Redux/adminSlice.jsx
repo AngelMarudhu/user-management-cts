@@ -7,6 +7,7 @@ const initialState = {
   error: "",
   isDeleted: false,
   userForUpdate: null,
+  isUpdated: false,
 };
 
 const adminSlice = createSlice({
@@ -36,6 +37,7 @@ const adminSlice = createSlice({
 
     builder.addCase(updateUser.pending, (state) => {
       state.isLoading = true;
+      state.isUpdated = false;
     });
 
     builder.addCase(updateUser.fulfilled, (state, action) => {
@@ -47,6 +49,12 @@ const adminSlice = createSlice({
           return user;
         }
       });
+      state.isUpdated = true;
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.error;
+      state.isUpdated = false;
     });
   },
 });

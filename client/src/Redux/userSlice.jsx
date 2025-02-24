@@ -14,6 +14,7 @@ const initialState = {
   error: null,
   isRegistered: false,
   isProfilePictureUpdated: false,
+  isLoggedin: false,
 };
 
 const userSlice = createSlice({
@@ -52,6 +53,7 @@ const userSlice = createSlice({
 
     builder.addCase(loginUser.pending, (state) => {
       state.isLoading = true;
+      state.isLoggedin = false;
     });
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
@@ -59,6 +61,7 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
+      state.isLoggedin = true;
 
       localStorage.setItem("user", JSON.stringify(state.user));
       localStorage.setItem("token", action.payload.token);
@@ -66,6 +69,7 @@ const userSlice = createSlice({
 
     builder.addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
+      state.isLoggedin = false;
       state.error = action.payload.error;
     });
 
@@ -88,6 +92,11 @@ const userSlice = createSlice({
       state.isProfilePictureUpdated = true;
       state.user = action.payload.user;
       localStorage.setItem("user", JSON.stringify(state.user));
+    });
+    builder.addCase(updatePicture.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isProfilePictureUpdated = false;
+      state.error = action.payload.error;
     });
   },
 });

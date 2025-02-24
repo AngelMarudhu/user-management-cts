@@ -12,7 +12,7 @@ const UpdateInput = ({ onClose }) => {
     profilePicture: null,
   });
 
-  const { userForUpdate } = useSelector((state) => state.admin);
+  const { userForUpdate, isUpdated } = useSelector((state) => state.admin);
   const debounce = useDebouncing(updateUser);
   const dipstach = useDispatch();
 
@@ -24,6 +24,21 @@ const UpdateInput = ({ onClose }) => {
       });
     }
   }, [userForUpdate]);
+
+  useEffect(() => {
+    if (isUpdated) {
+      toast.success("User updated successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
+      setTimeout(() => {
+        onClose();
+        dipstach(getAllUsers());
+      }, 2000);
+    }
+  }, [isUpdated]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,18 +75,9 @@ const UpdateInput = ({ onClose }) => {
 
     debounce({ id: userForUpdate._id, data: formDatas });
 
-    toast.success("User updated successfully", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      theme: "dark",
-    });
+    // setTimeout(() => {
 
-    setTimeout(() => {
-      onClose();
-      dipstach(getAllUsers());
-    }, 2000);
+    // }, 2000);
   };
 
   return (

@@ -6,10 +6,13 @@ import { getUserProfile } from "../Feature/userFeature";
 import { updatePicture } from "../Feature/userFeature";
 import useDebouncing from "../Utils/useDebouncing";
 import { logOut } from "../Redux/userSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 const Home = () => {
   const [fileData, setFileData] = useState(null);
-  const { user, isLoading } = useSelector((state) => state.user);
+  const { user, isLoading, isProfilePictureUpdated } = useSelector(
+    (state) => state.user
+  );
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,7 +23,16 @@ const Home = () => {
     debounce();
   }, [dispatch]);
 
-  const handleFileChange = (e) => {
+  useEffect(() => {
+    if (isProfilePictureUpdated) {
+      toast.success("Updated successfully", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    }
+  }, [isProfilePictureUpdated]);
+
+  const handleFileChange = async (e) => {
     if (e.target.files.length > 0) {
       const file = e.target.files[0];
       setFileData(file);
@@ -36,9 +48,20 @@ const Home = () => {
     }
     const formData = new FormData();
     formData.append("profilePicture", fileData);
-    debounceUpdate(formData);
-  };
 
+    // try {
+    debounceUpdate(formData);
+    //   toast.success("Updated successfully", {
+    //     position: "top-right",
+    //     autoClose: 500,
+    //   });
+    // } catch (error) {
+    //   toast.error("Failed to update picture. Please try again.", {
+    //     position: "top-right",
+    //     autoClose: 1000,
+    //   });
+    // }
+  };
   const logout = () => {
     dispatch(logOut());
     navigate("/login");
@@ -46,6 +69,7 @@ const Home = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
+      <ToastContainer />
       <div className="bg-white p-6 rounded-lg shadow-lg text-center">
         <h1 className="text-2xl font-bold mb-4">Home</h1>
 
